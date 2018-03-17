@@ -25,7 +25,7 @@ SECRET_KEY = '9hxcp$ik=ehv@s8@hl=hw=my!s=+v4*hsjiwcqqswgdc8+5v+b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'blog-app-eyobtariku213805.codeanyapp.com', ]
 
 
 # Application definition
