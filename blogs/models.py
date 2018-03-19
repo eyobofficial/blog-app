@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+from .managers import PublisheManager
+
 
 class Post(models.Model):
     """
@@ -28,6 +30,9 @@ class Post(models.Model):
         choices=STATUS_CHOICES,
         default='draft',
     )
+
+    objects = models.Manager()
+    published = PublisheManager()
 
     class Meta:
         ordering = ['-publish', ]
