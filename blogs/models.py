@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from .managers import PublisheManager
+from .managers import PublishedManager
 
 
 class Post(models.Model):
@@ -32,7 +32,7 @@ class Post(models.Model):
     )
 
     objects = models.Manager()
-    published = PublisheManager()
+    published = PublishedManager()
 
     class Meta:
         ordering = ['-publish', ]
