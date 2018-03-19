@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block page_main %}
+<div class="container">
+    <h1 class="h2">Blog Posts</h1>
+    {% for post in post_list %}
+    <ul>
+        <li>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -9,13 +9,13 @@ def post_list(request):
     })
 
 
-def post_detail(request, year, month, date, slug):
+def post_detail(request, year, month, day, slug):
     post = get_object_or_404(
         Post,
-        year=year,
-        month=month,
-        date=date,
-        slug=slug
+        slug=slug,
+        publish__year=year,
+        publish__month=month,
+        publish__day=day
     )
     return render(request, 'blogs/post_detail.html', {
         'post': post,
