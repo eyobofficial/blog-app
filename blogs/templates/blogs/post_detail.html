@@ -11,7 +11,9 @@
     </section>
     <br>
     <footer>
-        <a href="{% url 'blogs:post-share' post.id %}" class="btn btn-default">Share</a>
+        <a href="{% url 'blogs:post-share' post.id %}" class="btn btn-default">
+            <i class="fa fa-share"></i> Share
+        </a>
     </footer>
 </div>
 {% endblock %}

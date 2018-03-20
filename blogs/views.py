@@ -44,11 +44,13 @@ def post_share(request, pk):
             post_absolute_url = request.build_absolute_uri(post.get_absolute_url())
             subject = '{} recommends you a blog post'.format(name)
             message = '''Hey {},
-                         Please read this post, you would love it!
-                          Title: <strong>{}</strong>
-                          Link: {}
+                        Please read this post, you would love it!
 
-                        <em>{}</em>
+                        Title: {}
+                        Link: {}
+
+                        Comment:
+                        {}
                       '''.format(name, post.title, post_absolute_url, comment)
             send_mail(subject, message, email, [to, ])
             sent = True
