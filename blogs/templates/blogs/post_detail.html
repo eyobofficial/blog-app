@@ -1,5 +1,17 @@
 {% extends 'base.html' %}
 
 {% block page_main %}
-<h1>{{ post.title }}</h1>
+<div class="container">
+    <header>
+        <h1>{{ post.title }}</h1>
+        <p>Post By: {{ post.author }} | {{ post.publish|date:'d M, Y' }}</p>
+    </header>
+    <section>
+        {{ post.body }}
+    </section>
+    <br>
+    <footer>
+        <a href="{% url 'blogs:post-share' post.id %}" class="btn btn-default">Share</a>
+    </footer>
+</div>
 {% endblock %}

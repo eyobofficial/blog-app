@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
+from django.core.mail import send_mail
 from .models import Post
 from .forms import EmailPostForm
 
@@ -41,12 +42,15 @@ def post_share(request, pk):
             comment = form.cleaned_data.get('comment', '')
 
             post_absolute_url = request.build_absolute_uri(post.get_absolute_url())
-            subject = '{} ({}) recommends you a blog post'.format(name, email)
-            message = '''Read <strong>{}</strong>
-                         {}
-                         {}
-                      '''.format(post.title, post_absolute_url, comment)
-            send_mail(subject, message, 'myemail@gmail.com', [to, ])
+            subject = '{} recommends you a blog post'.format(name)
+            message = '''Hey {},
+                         Please read this post, you would love it!
+                          Title: <strong>{}</strong>
+                          Link: {}
+
+                        <em>{}</em>
+                      '''.format(name, post.title, post_absolute_url, comment)
+            send_mail(subject, message, email, [to, ])
             sent = True
     else:
         form = form_class()

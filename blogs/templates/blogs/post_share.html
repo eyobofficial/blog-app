@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block page_title %} Share Post {% endblock %}
+
+{% block page_main %}
+    <div class="container">
+        {% if sent %}
+            <div class="alert alert-success">
+                {{ post.title }} is successfully sent over email.
+            </div>
+        {% else %}
+        <h2>Share To Your Friends</h2>
+        <form name="post-share-form" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-group">
+                <input type="submit" name="submit" class="btn btn-default" value="Send">
+            </div>
+        </form>
+        {% endif %}
+    </div>
+{% endblock %}
