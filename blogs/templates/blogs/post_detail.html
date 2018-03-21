@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block page_main %}
 <div class="container">
@@ -6,14 +7,38 @@
         <h1>{{ post.title }}</h1>
         <p>Post By: {{ post.author }} | {{ post.publish|date:'d M, Y' }}</p>
     </header>
-    <section>
+    <section class="bodySection">
         {{ post.body }}
     </section>
-    <br>
-    <footer>
+
+    <section class="shareSection">
         <a href="{% url 'blogs:post-share' post.id %}" class="btn btn-default">
             <i class="fa fa-share"></i> Share
         </a>
-    </footer>
+    </section>
+    
+    <section class="commentSection">
+        {% with comment_list.count as total_comments %}
+        <h4>{{ total_comments }} Comment{{ total_comments|pluralize }}</h4>
+        {% endwith %}
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">submit</button>
+                <button type="reset" class="btn btn-default">reset</button>
+            </div>
+        </form>
+
+        {% for comment in comment_list %}
+        <div class="comments">
+            <p><strong>{{ comment.name }}</strong> {{ comment.created_at|date:'M d, Y' }}</p>
+            <p>{{ comment.body }}</p>
+        </div>
+        {% empty %}
+        <p>Be the first to comment.</p>
+        {% endfor %}
+    </section>
 </div>
 {% endblock %}

@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from .managers import PublishedManager
+from .managers import PublishedManager, CommentManager
 
 
 class Post(models.Model):
@@ -47,3 +47,22 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    name = models.CharField('Full Name', max_length=60)
+    email = models.EmailField()
+    body = models.TextField('Comment')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_approved = models.BooleanField(default=True)
+
+    # Managers
+    objects = CommentManager()
+
+    class Meta:
+        ordering = ['created_at', ]
+
+    def __str__(self):
+        return 'Comment by {} on {}'.format(self.name, self.post)

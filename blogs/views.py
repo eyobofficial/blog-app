@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 from django.core.mail import send_mail
-from .models import Post
-from .forms import EmailPostForm
+from .models import Post, Comment
+from .forms import EmailPostForm, CommentForm
 
 
 class PostList(ListView):
@@ -21,8 +21,22 @@ def post_detail(request, year, month, day, slug):
         publish__month=month,
         publish__day=day
     )
+    comment_list = Comment.objects.approved().filter(post=post)
+    form_class = CommentForm
+
+    if request.method == 'POST':
+        form = form_class(request.POST)
+
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.post = post
+            new_comment.save()
+    else:
+        form = form_class()
     return render(request, 'blogs/post_detail.html', {
         'post': post,
+        'comment_list': comment_list,
+        'form': form,
     })
 
 
